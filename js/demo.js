@@ -19,9 +19,10 @@ document.getElementById('fetch').addEventListener("click",function(){
 
 function findUser(user){
     let info=user.split(" ");
+    let value;
     users.map((single)=>{
         if(single.firstname==info[0] && single.lastname==info[1]){
-            document.getElementById('info').innerHTML="Name: "+single.firstname+"<br>Last Name: "+single.lastname+"<br>Mobile: "+single.mobile+"<br>City: "+single.city;
+            document.getElementById('userInfo').innerHTML="<div class='card ms-auto me-auto' style='width:50%'><div class='card-header' style='font-size: 30px;'>"+single.firstname+"</div><div class='card-body'><p class='card-text'>Last Name: "+single.lastname+"</p><br><p class='card-text'>Mobile: "+single.mobile+"</p></div><div class='card-footer'>City: "+single.city+"</div></div>";
         }
     })
 }
