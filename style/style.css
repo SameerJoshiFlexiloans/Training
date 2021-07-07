@@ -6,3 +6,11 @@ table a{
     text-decoration: none;
     color:black;
 }
+
+#waiting-add, #waiting-fetch, #waiting-delete, #waiting-update, #waiting-user-info{
+    display: none;
+}
+
+.navbar a{
+    font-weight: bold;
+}

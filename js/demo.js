@@ -1,14 +1,12 @@
-let users=[
-    {firstname:"Sameer",lastname:"Joshi",mobile:9421509117,city:"Mumbai"},
-    {firstname:"Tanmay",lastname:"Joshi",mobile:9922463919,city:"Aurangabad"},
-    {firstname:"Rajesh",lastname:"Jadhav",mobile:1234567890,city:"Aurangabad"}
-];
+let users=[];
 
-fetch("https://mocki.io/v1/fb361900-0ad8-4719-ab73-29fc0718d241")
+fetch("https://my-json-server.typicode.com/SameerJoshiFlexiloans/my-json-server/users")
 .then(response=>{
-    return response.json();})
+    return response.json();
+})
 .then(data =>{
-    users=data["data"];
+    users=data;
+    console.log(users);
 });
 
 
@@ -19,15 +17,18 @@ document.getElementById('fetch').addEventListener("click",function(){
 
 function findUser(user){
     let info=user.split(" ");
-    let value;
-    users.map((single)=>{
-        if(single.firstname==info[0] && single.lastname==info[1]){
-            document.getElementById('userInfo').innerHTML="<div class='card ms-auto me-auto' style='width:50%'><div class='card-header' style='font-size: 30px;'>"+single.firstname+"</div><div class='card-body'><p class='card-text'>Last Name: "+single.lastname+"</p><br><p class='card-text'>Mobile: "+single.mobile+"</p></div><div class='card-footer'>City: "+single.city+"</div></div>";
-        }
-    })
+    setTimeout(()=>{
+        users.map((single)=>{
+            if(single.firstname==info[0] && single.lastname==info[1]){
+                document.getElementById('userInfo').innerHTML="<div class='card ms-auto me-auto' style='width:50%' id='user-info-card'><div class='card-header bg-info text-white' style='font-size: 30px;'>"+single.firstname+"</div><div class='card-body bg-light'><p class='card-text'>Last Name: "+single.lastname+"</p><br><p class='card-text'>Mobile: "+single.mobile+"</p></div><div class='card-footer bg-secondary text-white'>City: "+single.city+"</div></div>";
+            }
+        });
+    },1000);
+    waitingQueueOn("user-view");
 }
 
 function fetchUser(){
+    navActivator('navfetch');
     value="<table class='table table-hover'><thead><tr><th>FirstName</th><th>Last Name</th><th>Mobile No.</th><th>City</th></tr></thead><tbody>";
 
     users.map((user) => {
@@ -37,9 +38,9 @@ function fetchUser(){
 
     setTimeout(()=>{
         document.getElementById("userData").innerHTML=value;
-        document.getElementById('info').innerHTML="";
+        waitingQueueOff("fetch");
     },1000);
-    document.getElementById('info').innerHTML="Fetching";
+    waitingQueueOn("fetch");
 }
 
 function addUser(){
@@ -50,9 +51,9 @@ function addUser(){
             users.push({firstname:fname,lastname:lname,mobile:mobile,city:city});
             fetchUser();
             clearInputs();
+            waitingQueueOff('add');
         },2000);
-        document.getElementById("info").innerHTML="Adding";
-        document.getElementById("wrong").innerHTML="";
+        waitingQueueOn('add');
     }
     else{
         document.getElementById('wrong').innerHTML="Please enter valid values";
@@ -65,9 +66,9 @@ function deleteUser(){
         users=users.filter((user) => user.firstname != fname || user.lastname != lname );
         fetchUser();
         clearInputs();
+        waitingQueueOff('delete');
     },2000)
-    document.getElementById("info").innerHTML="Removing";
-    document.getElementById("wrong").innerHTML="";
+    waitingQueueOn('delete');
 }
 
 function updateUser(){
@@ -85,10 +86,10 @@ function updateUser(){
             users[final].mobile=mobile;
             users[final].city=city;
             fetchUser();
-            clearInputs()
+            clearInputs();
+            waitingQueueOff('update');
         },2000);
-        document.getElementById("info").innerHTML="Updating";
-        document.getElementById("wrong").innerHTML="";
+        waitingQueueOn('update');
     }
     else if(fname.length>2 && lname.length > 2 && mobile.length > 2 && city.length > 2 && final == -1){
         document.getElementById('wrong').innerHTML="User does not found";
@@ -132,12 +133,16 @@ function clearInputs(){
 }
 
 function option(value){
-    if(value=="fetch") fetchUser();
+    if(value=="fetch"){
+        navActivator("navfetch");
+        fetchUser();
+    }
     else if(value=="add"){
         document.getElementById("add").style.display="initial";
         document.getElementById('delete').style.display="none";
         document.getElementById('update').style.display="none"
         optionValueSetter();
+        navActivator("navadd");
     }
     else if(value=="delete"){
         document.getElementById("delete").style.display="initial";
@@ -147,12 +152,17 @@ function option(value){
         document.getElementById("city").style.display="none";
         document.getElementById('lmobile').style.display="none";
         document.getElementById('lcity').style.display="none";
+        navActivator("navdelete");
+    }
+    else if(value == 'home'){
+        navActivator("navhome")
     }
     else{
         document.getElementById("update").style.display="initial";
         document.getElementById('add').style.display="none";
         document.getElementById('delete').style.display="none";
         optionValueSetter();
+        navActivator("navupdate");
     }
 }
 
@@ -173,4 +183,54 @@ function validator(){
     else{
         document.getElementById("lname").className="form-control is-invalid";
     }
+}
+
+function waitingQueueOff(operation){
+    if(operation == "fetch"){
+        document.getElementById('fetch-value').innerHTML="Fetch";
+        document.getElementById("waiting-fetch").style.display="none";
+    }
+    else if(operation == 'add'){
+        document.getElementById('add-value').innerHTML="Add";
+        document.getElementById("waiting-add").style.display="none";
+    }
+    else if(operation == 'delete'){
+        document.getElementById('delete-value').innerHTML="Delete";
+        document.getElementById("waiting-delete").style.display="none";
+    }
+    else if(operation == 'update'){
+        document.getElementById('update-value').innerHTML="Update";
+        document.getElementById("waiting-update").style.display="none";
+    }
+    else if(operation == 'user-view'){
+        document.getElementById('waiting-user-info').style.display="none";
+    }
+}
+
+function waitingQueueOn(operation){
+    if(operation == "fetch"){
+        document.getElementById("waiting-fetch").style.display="flex";
+        document.getElementById('fetch-value').innerHTML="";
+    }
+    else if(operation == 'add'){
+        document.getElementById("waiting-add").style.display="flex";
+        document.getElementById('add-value').innerHTML="";
+    }
+    else if(operation == 'delete'){
+        document.getElementById("waiting-delete").style.display="flex";
+        document.getElementById('delete-value').innerHTML="";
+    }
+    else if(operation == 'update'){
+        document.getElementById("waiting-update").style.display="flex";
+        document.getElementById('update-value').innerHTML="";
+    }
+    else if(operation == 'user-view'){
+        document.getElementById('waiting-user-info').style.display="flex";
+    }
+}
+
+function navActivator(option){
+    let active=document.querySelector(".active");
+    active.classList.remove("active");
+    document.getElementById(option).classList.add("active");
 }
