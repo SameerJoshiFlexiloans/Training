@@ -100,8 +100,8 @@ function updateUser(){
 }
 
 function optionValueSetter(){
-    document.getElementById('mobile').style.display="initial";
-    document.getElementById("city").style.display="initial";
+    document.getElementById('mobile').style.display="block";
+    document.getElementById("city").style.display="block";
     document.getElementById('lmobile').style.display="inline-block";
     document.getElementById('lcity').style.display="inline-block";
 }
@@ -138,14 +138,14 @@ function option(value){
         fetchUser();
     }
     else if(value=="add"){
-        document.getElementById("add").style.display="initial";
+        document.getElementById("add").style.display="block";
         document.getElementById('delete').style.display="none";
         document.getElementById('update').style.display="none"
         optionValueSetter();
         navActivator("navadd");
     }
     else if(value=="delete"){
-        document.getElementById("delete").style.display="initial";
+        document.getElementById("delete").style.display="block";
         document.getElementById('add').style.display="none";
         document.getElementById('update').style.display="none";
         document.getElementById('mobile').style.display="none";
@@ -158,7 +158,7 @@ function option(value){
         navActivator("navhome")
     }
     else{
-        document.getElementById("update").style.display="initial";
+        document.getElementById("update").style.display="block";
         document.getElementById('add').style.display="none";
         document.getElementById('delete').style.display="none";
         optionValueSetter();
