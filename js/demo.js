@@ -6,7 +6,7 @@ fetch("https://my-json-server.typicode.com/SameerJoshiFlexiloans/my-json-server/
 })
 .then(data =>{
     users=data;
-    console.log(users);
+    // console.log(users);
 });
 
 
@@ -233,4 +233,16 @@ function navActivator(option){
     let active=document.querySelector(".active");
     active.classList.remove("active");
     document.getElementById(option).classList.add("active");
+}
+
+function submitOption(option){
+    if(option == 'add'){
+        document.getElementById('users').action="/add"
+    }
+    else if(option == 'delete'){
+        document.getElementById("users").action="/delete";
+    }
+    else if(option == 'update'){
+        document.getElementById("users").action="/update";
+    }
 }

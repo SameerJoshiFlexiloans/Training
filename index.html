@@ -37,24 +37,24 @@
             <div id="userInfo"><div class="d-flex justify-content-center mt-5"><span class="spinner-grow text-primary" style="width: 5rem; height: 5rem;" role="status" id="waiting-user-info"></span></div></div>
         </div>
         <div class="col-lg-6">
-            <form id="users" novalidate>
+            <form id="users" novalidate action="/" method="POST">
                 <div>
                     <label for="fname" id="lfname" class="form-label">First Name: </label>
-                    <input type="text" id="fname" class="form-control" onkeyup="validator()"><br>
+                    <input type="text" id="fname" class="form-control" onkeyup="validator()" name="firstname" value="Sameer"><br>
                     <div class="invalid-feedback">Please Enter valid first name. </div>
                 </div>
                 <div>
                     <label for="lname" id="llname" class="form-label">Last Name: </label>
-                    <input type="text" id="lname" class="form-control" onkeyup="validator()"><br>
+                    <input type="text" id="lname" class="form-control" onkeyup="validator()" name="lastname" value="Joshi"><br>
                     <div class="invalid-feedback">Please Enter valid last name. </div>
                 </div>
                 <label for="mobile" id="lmobile" class="form-label">Mobile Number: </label>
-                <input type="number" id="mobile" class="form-control"><br>
+                <input type="number" id="mobile" class="form-control" name="mobile" value=9922463919><br>
                 <label for="city" id="lcity" class="form-label"> City: </label>
-                <input type="text" id="city" class="form-control"><br>
-                <button onclick="addUser()" type="submit" id="add" class="btn btn-success mt-2" value="Sam"><span class="spinner-border here" id="waiting-add" role="status" style="width: 1rem; height: 1rem;"></span><span id="add-value">Add</span></button>
-                <button onclick="deleteUser()" id="delete" class="btn btn-danger"><span class="spinner-border here" id="waiting-delete" role="status" style="width: 1rem; height: 1rem;"></span><span id="delete-value">Delete</span></button>
-                <button onclick="updateUser()" id="update" class="btn btn-primary mt-2"><span class="spinner-border here" id="waiting-update" role="status" style="width: 1rem; height: 1rem;"></span><span id="update-value">Update</span></button>
+                <input type="text" id="city" class="form-control" name="city" value="Aurangabad"><br>
+                <button onclick="submitOption('add')" type="submit" id="add" class="btn btn-success mt-2" value="Sam"><span class="spinner-border here" id="waiting-add" role="status" style="width: 1rem; height: 1rem;"></span><span id="add-value">Add</span></button>
+                <button onclick="submitOption('delete')" id="delete" class="btn btn-danger"><span class="spinner-border here" id="waiting-delete" role="status" style="width: 1rem; height: 1rem;"></span><span id="delete-value">Delete</span></button>
+                <button onclick="submitOption('update')" id="update" class="btn btn-primary mt-2"><span class="spinner-border here" id="waiting-update" role="status" style="width: 1rem; height: 1rem;"></span><span id="update-value">Update</span></button>
             </form>
             <p id="wrong"></p>
         </div>
